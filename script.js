@@ -29,6 +29,21 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeApp()
   setupEventListeners()
   checkAuthState()
+
+  // Animar estadísticas cuando el footer sea visible
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        animateStats()
+        observer.unobserve(entry.target)
+      }
+    })
+  })
+
+  const footer = document.getElementById("footer")
+  if (footer) {
+    observer.observe(footer)
+  }
 })
 
 // Inicializar aplicación
@@ -58,6 +73,31 @@ function setupEventListeners() {
   document.getElementById("registerBtn")?.addEventListener("click", (e) => {
     e.preventDefault()
     openModal("registerModal")
+  })
+
+  // Nuevos botones de navegación
+  document.getElementById("serviciosNavBtn")?.addEventListener("click", (e) => {
+    e.preventDefault()
+    if (!currentUser) {
+      openModal("registerModal")
+    } else {
+      showServices()
+    }
+  })
+
+  document.getElementById("preciosNavBtn")?.addEventListener("click", (e) => {
+    e.preventDefault()
+    openModal("preciosModal")
+  })
+
+  document.getElementById("contactoNavBtn")?.addEventListener("click", (e) => {
+    e.preventDefault()
+    document.getElementById("footer").scrollIntoView({ behavior: "smooth" })
+  })
+
+  document.getElementById("explorarServiciosBtn")?.addEventListener("click", (e) => {
+    e.preventDefault()
+    document.getElementById("footer").scrollIntoView({ behavior: "smooth" })
   })
 
   // Menú hamburguesa
@@ -762,8 +802,43 @@ function initParticleEffects() {
   document.body.appendChild(particleContainer)
 }
 
+// Animar estadísticas
+function animateStats() {
+  const stats = [
+    { id: "totalUsers", target: 2847, increment: 47 },
+    { id: "totalOrders", target: 15392, increment: 123 },
+    { id: "onlineUsers", target: 127, increment: 3 },
+  ]
+
+  stats.forEach((stat) => {
+    const element = document.getElementById(stat.id)
+    if (element) {
+      let current = 0
+      const increment = Math.ceil(stat.target / 100)
+
+      const timer = setInterval(() => {
+        current += increment
+        if (current >= stat.target) {
+          current = stat.target
+          clearInterval(timer)
+        }
+        element.textContent = current.toLocaleString()
+      }, 20)
+
+      // Actualizar periódicamente
+      setInterval(() => {
+        const newValue = stat.target + Math.floor(Math.random() * stat.increment)
+        element.textContent = newValue.toLocaleString()
+      }, 30000) // Cada 30 segundos
+    }
+  })
+}
+
 // Inicializar efectos al cargar
-setTimeout(initParticleEffects, 1000)
+setTimeout(() => {
+  initParticleEffects()
+  animateStats()
+}, 1000)
 
 console.log("🚀 Jorling Seguidores iniciado correctamente")
 console.log("⚡ Credenciales de administrador:")

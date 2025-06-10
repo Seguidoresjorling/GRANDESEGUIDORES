@@ -923,6 +923,257 @@ body {
   }
 }
 
+/* Estadísticas dinámicas */
+.stats-section {
+  padding: 40px 0;
+  background: rgba(0, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+}
+
+.stats-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  padding: 0 20px;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--primary-color);
+  text-shadow: 0 0 10px var(--primary-color);
+  margin-bottom: 10px;
+  animation: countUp 2s ease-out;
+}
+
+.stat-label {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Sección de garantía */
+.guarantee-section {
+  padding: 50px 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.guarantee-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.guarantee-icon {
+  font-size: 4rem;
+  color: var(--neon-green);
+  margin-bottom: 20px;
+  animation: pulse 2s infinite;
+}
+
+.guarantee-content h3 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.guarantee-content p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  opacity: 0.9;
+}
+
+.guarantee-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px;
+  background: rgba(0, 255, 255, 0.1);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+.feature:hover {
+  background: rgba(0, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.feature i {
+  color: var(--neon-green);
+  font-size: 1.2rem;
+}
+
+.feature span {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Modal de precios */
+.precios-content {
+  text-align: center;
+}
+
+.precios-content p {
+  margin-bottom: 30px;
+  font-size: 1.1rem;
+}
+
+.contact-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.contact-option {
+  width: 100%;
+}
+
+.contact-btn {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  background: linear-gradient(135deg, #25d366, #128c7e);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: all 0.3s;
+  border: 2px solid #25d366;
+}
+
+.whatsapp-secondary .contact-btn {
+  background: linear-gradient(135deg, #128c7e, #075e54);
+  border-color: #128c7e;
+}
+
+.contact-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+}
+
+.contact-btn i {
+  font-size: 2rem;
+}
+
+.contact-info {
+  text-align: left;
+}
+
+.contact-title {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.contact-number {
+  display: block;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.social-networks {
+  border-top: 1px solid rgba(0, 255, 255, 0.3);
+  padding-top: 30px;
+}
+
+.social-networks h4 {
+  margin-bottom: 20px;
+}
+
+.networks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+}
+
+.network-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 15px 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #fff;
+  transition: all 0.3s;
+  border: 2px solid transparent;
+}
+
+.network-btn.instagram {
+  background: linear-gradient(135deg, #e4405f, #833ab4);
+  border-color: #e4405f;
+}
+
+.network-btn.facebook {
+  background: linear-gradient(135deg, #1877f2, #42a5f5);
+  border-color: #1877f2;
+}
+
+.network-btn.telegram {
+  background: linear-gradient(135deg, #0088cc, #229ed9);
+  border-color: #0088cc;
+}
+
+.network-btn.twitter {
+  background: linear-gradient(135deg, #1da1f2, #0d8bd9);
+  border-color: #1da1f2;
+}
+
+.network-btn.youtube {
+  background: linear-gradient(135deg, #ff0000, #cc0000);
+  border-color: #ff0000;
+}
+
+.network-btn.tiktok {
+  background: linear-gradient(135deg, #000000, #ff0050);
+  border-color: #ff0050;
+}
+
+.network-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.network-btn i {
+  font-size: 1.5rem;
+}
+
+.network-btn span {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .text-box h1 {

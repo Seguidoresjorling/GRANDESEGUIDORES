@@ -28,9 +28,9 @@
             <i class="fas fa-times" onclick="hideMenu()"></i>
             <ul>
                 <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#servicios">Servicios</a></li>
-                <li><a href="#precios">Precios</a></li>
-                <li><a href="#contacto">Contacto</a></li>
+                <li><a href="#" id="serviciosNavBtn">Servicios</a></li>
+                <li><a href="#" id="preciosNavBtn">Precios</a></li>
+                <li><a href="#" id="contactoNavBtn">Contacto</a></li>
                 <li><a href="#" id="loginBtn" class="neon-btn">Iniciar Sesión</a></li>
                 <li><a href="#" id="registerBtn" class="neon-btn">Registrarse</a></li>
             </ul>
@@ -63,7 +63,7 @@
         <div class="text-box">
             <h1 class="neon-text">POTENCIA TUS REDES SOCIALES</h1>
             <p class="glow-text">Domina el mundo digital con nuestros servicios de élite</p>
-            <a href="#servicios" class="hero-btn electric-btn">
+            <a href="#footer" class="hero-btn electric-btn" id="explorarServiciosBtn">
                 <span>EXPLORAR SERVICIOS</span>
                 <div class="electric-border"></div>
             </a>
@@ -327,9 +327,122 @@
         <div class="electric-pulse"></div>
     </a>
 
+    <!-- Modal de Precios -->
+    <div id="preciosModal" class="modal">
+        <div class="modal-content electric-modal">
+            <span class="close">&times;</span>
+            <h2 class="neon-text">CONTACTA PARA PRECIOS</h2>
+            <div class="precios-content">
+                <p class="glow-text">Selecciona tu método de contacto preferido:</p>
+                
+                <div class="contact-options">
+                    <div class="contact-option whatsapp-primary">
+                        <a href="https://wa.me/573234135603" target="_blank" class="contact-btn">
+                            <i class="fab fa-whatsapp"></i>
+                            <div class="contact-info">
+                                <span class="contact-title">WhatsApp Principal</span>
+                                <span class="contact-number">+57 323 413 5603</span>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="contact-option whatsapp-secondary">
+                        <a href="https://wa.me/573150233701" target="_blank" class="contact-btn">
+                            <i class="fab fa-whatsapp"></i>
+                            <div class="contact-info">
+                                <span class="contact-title">WhatsApp Alternativo</span>
+                                <span class="contact-number">+57 315 023 3701</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="social-networks">
+                    <h4 class="neon-text">También nos encuentras en:</h4>
+                    <div class="networks-grid">
+                        <a href="https://www.instagram.com/jorlingjoseseguidores/" target="_blank" class="network-btn instagram">
+                            <i class="fab fa-instagram"></i>
+                            <span>Instagram</span>
+                        </a>
+                        <a href="#" target="_blank" class="network-btn facebook">
+                            <i class="fab fa-facebook"></i>
+                            <span>Facebook</span>
+                        </a>
+                        <a href="#" target="_blank" class="network-btn telegram">
+                            <i class="fab fa-telegram"></i>
+                            <span>Telegram</span>
+                        </a>
+                        <a href="#" target="_blank" class="network-btn twitter">
+                            <i class="fab fa-twitter"></i>
+                            <span>Twitter</span>
+                        </a>
+                        <a href="#" target="_blank" class="network-btn youtube">
+                            <i class="fab fa-youtube"></i>
+                            <span>YouTube</span>
+                        </a>
+                        <a href="#" target="_blank" class="network-btn tiktok">
+                            <i class="fab fa-tiktok"></i>
+                            <span>TikTok</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer épico -->
-    <footer class="epic-footer">
+    <footer class="epic-footer" id="footer">
         <div class="footer-lightning"></div>
+        
+        <!-- Estadísticas dinámicas -->
+        <div class="stats-section">
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalUsers">2,847</div>
+                    <div class="stat-label">Usuarios Activos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="totalOrders">15,392</div>
+                    <div class="stat-label">Pedidos Completados</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="onlineUsers">127</div>
+                    <div class="stat-label">En Línea Ahora</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Servicios Seguros</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Garantía de servicios -->
+        <div class="guarantee-section">
+            <div class="guarantee-content">
+                <i class="fas fa-shield-alt guarantee-icon"></i>
+                <h3 class="neon-text">SERVICIOS 100% SEGUROS</h3>
+                <p class="glow-text">Garantizamos la entrega de todos nuestros servicios. Seguidores reales y de calidad.</p>
+                <div class="guarantee-features">
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Entrega Garantizada</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-users"></i>
+                        <span>Seguidores Reales</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-clock"></i>
+                        <span>Entrega Rápida</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-headset"></i>
+                        <span>Soporte 24/7</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="footer-content">
             <div class="footer-section about">
                 <h2 class="neon-text">Jorling Seguidores</h2>
