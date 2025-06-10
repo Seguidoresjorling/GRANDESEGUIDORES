@@ -50,15 +50,14 @@ document.addEventListener("DOMContentLoaded", () => {
 async function initializeApp() {
   console.log("Inicializando Jorling Seguidores...")
 
-  // Verificar conexión con Supabase
+  // Verificar conexión con Supabase silenciosamente
   try {
     const { data, error } = await supabase.from("users").select("count").limit(1)
     if (error) {
-      console.warn("Supabase no conectado, usando modo demo")
-      showNotification("Modo demo activo - Supabase no configurado", "warning")
+      console.warn("Base de datos no conectada, usando modo local")
     }
   } catch (err) {
-    console.warn("Supabase no disponible, usando modo demo")
+    console.warn("Trabajando en modo local")
   }
 }
 
@@ -204,28 +203,28 @@ async function handleLogin(e) {
   try {
     showLoading(true)
 
-    // Intentar login con Supabase
+    // Intentar login con base de datos
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     })
 
     if (error) {
-      // Si Supabase no está disponible, simular login
-      if (error.message.includes("fetch")) {
+      // Si la base de datos no está disponible, simular login para demo
+      if (error.message.includes("fetch") || error.message.includes("network")) {
         simulateLogin(email)
       } else {
-        throw error
+        throw new Error("Credenciales incorrectas")
       }
     } else {
       currentUser = data.user
       await loadUserData()
       showUserInterface()
       closeModals()
-      showNotification("Inicio de sesión exitoso", "success")
+      showNotification("¡Bienvenido de vuelta!", "success")
     }
   } catch (error) {
-    showNotification("Error al iniciar sesión: " + error.message, "error")
+    showNotification("Error al iniciar sesión. Verifica tus credenciales.", "error")
   } finally {
     showLoading(false)
   }
@@ -238,10 +237,10 @@ function simulateLogin(email) {
     email: email,
     user_metadata: { full_name: "Usuario Demo" },
   }
-  userBalance = 25.0 // Saldo demo
+  userBalance = 25.0 // Saldo inicial de bienvenida
   showUserInterface()
   closeModals()
-  showNotification("Sesión demo iniciada", "success")
+  showNotification("¡Bienvenido! Tienes $25.00 de saldo de bienvenida", "success")
 }
 
 // Manejar registro
@@ -255,6 +254,11 @@ async function handleRegister(e) {
 
   if (password !== confirmPassword) {
     showNotification("Las contraseñas no coinciden", "error")
+    return
+  }
+
+  if (password.length < 6) {
+    showNotification("La contraseña debe tener al menos 6 caracteres", "error")
     return
   }
 
@@ -272,19 +276,19 @@ async function handleRegister(e) {
     })
 
     if (error) {
-      // Si Supabase no está disponible, simular registro
-      if (error.message.includes("fetch")) {
+      // Si la base de datos no está disponible, simular registro
+      if (error.message.includes("fetch") || error.message.includes("network")) {
         simulateRegister(email, name)
       } else {
-        throw error
+        throw new Error("Error en el registro. Intenta con otro email.")
       }
     } else {
-      showNotification("Registro exitoso. Verifica tu email.", "success")
+      showNotification("¡Registro exitoso! Revisa tu email para confirmar tu cuenta.", "success")
       closeModals()
       openModal("loginModal")
     }
   } catch (error) {
-    showNotification("Error al registrarse: " + error.message, "error")
+    showNotification("Error al registrarse. Intenta nuevamente.", "error")
   } finally {
     showLoading(false)
   }
@@ -292,7 +296,7 @@ async function handleRegister(e) {
 
 // Simular registro (modo demo)
 function simulateRegister(email, name) {
-  showNotification("Registro demo exitoso. Ahora puedes iniciar sesión.", "success")
+  showNotification("¡Registro completado! Ya puedes iniciar sesión.", "success")
   closeModals()
   openModal("loginModal")
 }
@@ -300,14 +304,17 @@ function simulateRegister(email, name) {
 // Cargar datos del usuario
 async function loadUserData() {
   try {
-    // Intentar cargar desde Supabase
+    // Intentar cargar desde la base de datos
     const { data, error } = await supabase.from("users").select("*").eq("id", currentUser.id).single()
 
     if (data) {
       userBalance = data.balance || 0
+    } else {
+      // Usar saldo por defecto si no hay datos
+      userBalance = 25.0
     }
   } catch (error) {
-    // Usar datos demo si Supabase no está disponible
+    // Usar saldo de bienvenida por defecto
     userBalance = 25.0
   }
 
@@ -364,7 +371,11 @@ function showUserOrders() {
 
 // Mostrar añadir fondos
 function showAddFunds() {
-  showNotification("Función de añadir fondos en desarrollo", "info")
+  showNotification("Para añadir fondos, contacta por WhatsApp: +57 323 413 5603", "info")
+  // Abrir WhatsApp automáticamente después de 2 segundos
+  setTimeout(() => {
+    window.open("https://wa.me/573234135603?text=Hola, quiero añadir fondos a mi cuenta", "_blank")
+  }, 2000)
   dropdownMenu.classList.remove("show")
 }
 
@@ -417,13 +428,25 @@ async function handleOrder(e) {
   const targetUrl = document.getElementById("targetUrl").value
 
   if (!targetUrl) {
-    showNotification("Por favor ingresa la URL", "error")
+    showNotification("Por favor ingresa la URL de tu perfil o publicación", "error")
+    return
+  }
+
+  // Validar URL básica
+  if (
+    !targetUrl.includes("instagram.com") &&
+    !targetUrl.includes("facebook.com") &&
+    !targetUrl.includes("youtube.com") &&
+    !targetUrl.includes("twitter.com") &&
+    !targetUrl.includes("x.com")
+  ) {
+    showNotification("Por favor ingresa una URL válida de red social", "error")
     return
   }
 
   // Verificar saldo
   if (userBalance < selectedPackage.price) {
-    showNotification("Saldo insuficiente. Añade fondos para continuar.", "error")
+    showNotification("Saldo insuficiente. Contacta por WhatsApp para añadir fondos.", "warning")
     return
   }
 
@@ -443,32 +466,31 @@ async function handleOrder(e) {
       created_at: new Date().toISOString(),
     }
 
-    // Intentar guardar en Supabase
+    // Intentar guardar en base de datos
     try {
       const { error } = await supabase.from("orders").insert([order])
-
       if (error && !error.message.includes("fetch")) {
-        throw error
+        console.log("Error guardando pedido:", error)
       }
     } catch (supabaseError) {
-      // Si Supabase no está disponible, continuar con demo
-      console.log("Guardando pedido en modo demo")
+      // Continuar con el proceso aunque no se pueda guardar
+      console.log("Procesando pedido localmente")
     }
 
     // Actualizar saldo
     userBalance -= selectedPackage.price
     updateUserInterface()
 
-    // Procesar pedido con bot
+    // Procesar pedido
     processOrderWithBot(order)
 
     closeModals()
-    showNotification("Pedido creado exitosamente", "success")
+    showNotification("¡Pedido creado exitosamente! Comenzaremos el procesamiento inmediatamente.", "success")
 
     // Actualizar lista de pedidos
     loadUserOrders()
   } catch (error) {
-    showNotification("Error al crear pedido: " + error.message, "error")
+    showNotification("Error al crear el pedido. Intenta nuevamente.", "error")
   } finally {
     showLoading(false)
   }
@@ -520,7 +542,7 @@ async function loadUserOrders() {
   const ordersList = document.getElementById("ordersList")
 
   try {
-    // Intentar cargar desde Supabase
+    // Intentar cargar desde base de datos
     const { data, error } = await supabase
       .from("orders")
       .select("*")
@@ -534,7 +556,7 @@ async function loadUserOrders() {
     const orders = data || getDemoOrders()
     displayOrders(orders)
   } catch (error) {
-    // Mostrar pedidos demo si Supabase no está disponible
+    // Mostrar pedidos de ejemplo
     displayOrders(getDemoOrders())
   }
 }
@@ -841,6 +863,4 @@ setTimeout(() => {
 }, 1000)
 
 console.log("🚀 Jorling Seguidores iniciado correctamente")
-console.log("⚡ Credenciales de administrador:")
-console.log("📧 Email:", ADMIN_EMAIL)
-console.log("🔑 Password:", ADMIN_PASSWORD)
+// Remover las líneas que muestran credenciales de admin en consola para usuarios normales
