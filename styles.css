@@ -135,25 +135,22 @@ body {
 /* Efectos de texto neón mejorados */
 .neon-text {
   color: var(--primary-color);
-  text-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color), 0 0 15px var(--primary-color), 0 0 20px
-    var(--primary-color), 0 0 35px var(--primary-color);
+  text-shadow: 0 0 3px var(--primary-color), 0 0 6px var(--primary-color), 0 0 9px var(--primary-color);
   animation: neonGlow 3s ease-in-out infinite alternate;
 }
 
 @keyframes neonGlow {
   from {
-    text-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color), 0 0 15px var(--primary-color), 0 0 20px
-      var(--primary-color), 0 0 35px var(--primary-color);
+    text-shadow: 0 0 3px var(--primary-color), 0 0 6px var(--primary-color), 0 0 9px var(--primary-color);
   }
   to {
-    text-shadow: 0 0 2px var(--primary-color), 0 0 5px var(--primary-color), 0 0 8px var(--primary-color), 0 0 12px
-      var(--primary-color), 0 0 25px var(--primary-color);
+    text-shadow: 0 0 2px var(--primary-color), 0 0 4px var(--primary-color), 0 0 6px var(--primary-color);
   }
 }
 
 .glow-text {
   color: #fff;
-  text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
 }
 
 /* Barra de navegación épica mejorada */
@@ -203,7 +200,7 @@ body {
   font-size: 1.8rem;
   font-weight: 900;
   margin: 0;
-  text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 30px var(--primary-color);
+  text-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color);
 }
 
 .logo i {
@@ -768,9 +765,7 @@ body {
   color: var(--primary-color);
   text-align: center;
   margin-bottom: 40px;
-  text-shadow: 
-    0 0 15px var(--primary-color),
-    0 0 30px var(--primary-color);
+  text-shadow: 0 0 8px var(--primary-color), 0 0 15px var(--primary-color);
   position: relative;
 }
 
@@ -1431,9 +1426,7 @@ body {
   font-size: 3rem;
   font-weight: 900;
   color: var(--primary-color);
-  text-shadow: 
-    0 0 15px var(--primary-color),
-    0 0 30px var(--primary-color);
+  text-shadow: 0 0 8px var(--primary-color), 0 0 15px var(--primary-color);
   margin-bottom: 15px;
   animation: countUp 2s ease-out;
   position: relative;
@@ -1823,9 +1816,7 @@ body {
   font-size: 2.2rem;
   font-weight: 900;
   color: var(--primary-color);
-  text-shadow: 
-    0 0 15px var(--primary-color),
-    0 0 30px var(--primary-color);
+  text-shadow: 0 0 8px var(--primary-color), 0 0 15px var(--primary-color);
   margin-bottom: 8px;
   animation: valueGlow 3s ease-in-out infinite alternate;
   position: relative;
@@ -1835,8 +1826,8 @@ body {
 @keyframes valueGlow {
   from { 
     text-shadow: 
-      0 0 15px var(--primary-color),
-      0 0 30px var(--primary-color);
+      0 0 8px var(--primary-color),
+      0 0 15px var(--primary-color);
   }
   to { 
     text-shadow: 
