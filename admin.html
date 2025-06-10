@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Jorling Seguidores</title>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <!-- Fondo épico para admin -->
+    <div class="admin-electric-bg">
+        <div class="admin-lightning"></div>
+        <div class="admin-grid"></div>
+    </div>
+
+    <div class="admin-container">
+        <!-- Sidebar épico -->
+        <div class="sidebar">
+            <div class="logo">
+                <h2><i class="fas fa-bolt"></i> JORLING ADMIN</h2>
+                <div class="logo-glow"></div>
+            </div>
+            <ul class="nav">
+                <li class="active" data-tab="dashboard">
+                    <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                    <div class="nav-glow"></div>
+                </li>
+                <li data-tab="orders">
+                    <a href="#"><i class="fas fa-shopping-cart"></i> Pedidos</a>
+                    <div class="nav-glow"></div>
+                </li>
+                <li data-tab="users">
+                    <a href="#"><i class="fas fa-users"></i> Usuarios</a>
+                    <div class="nav-glow"></div>
+                </li>
+                <li data-tab="services">
+                    <a href="#"><i class="fas fa-cogs"></i> Servicios</a>
+                    <div class="nav-glow"></div>
+                </li>
+                <li data-tab="refunds">
+                    <a href="#"><i class="fas fa-undo"></i> Reembolsos</a>
+                    <div class="nav-glow"></div>
+                </li>
+                <li data-tab="acceleration">
+                    <a href="#"><i class="fas fa-rocket"></i> Aceleración Masiva</a>
+                    <div class="nav-glow"></div>
+                </li>
+                <li data-tab="search">
+                    <a href="#"><i class="fas fa-search"></i> Buscar Órdenes</a>
+                    <div class="nav-glow"></div>
+                </li>
+                <li data-tab="funds">
+                    <a href="#"><i class="fas fa-wallet"></i> Gestión de Fondos</a>
+                    <div class="nav-glow"></div>
+                </li>
+                <li data-tab="reports">
+                    <a href="#"><i class="fas fa-chart-bar"></i> Informes</a>
+                    <div class="nav-glow"></div>
+                </li>
+                <li data-tab="settings">
+                    <a href="#"><i class="fas fa-cog"></i> Configuración</a>
+                    <div class="nav-glow"></div>
+                </li>
+                <li id="logoutBtn">
+                    <a href="#"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+                    <div class="nav-glow"></div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="main-content">
+            <!-- Barra superior épica -->
+            <div class="top-bar">
+                <div class="admin-title">
+                    <h1 class="neon-text">CENTRO DE COMANDO</h1>
+                    <div class="status-indicator">
+                        <span class="status-dot"></span>
+                        <span>Sistema Operativo</span>
+                    </div>
+                </div>
+                <div class="admin-controls">
+                    <div class="search-box">
+                        <input type="text" placeholder="Buscar..." id="globalSearch">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">5</span>
+                    </div>
+                    <div class="admin-user">
+                        <img src="/placeholder.svg?height=40&width=40" alt="Admin">
+                        <span>Administrador</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Área de contenido -->
+            <div class="content">
+                <!-- Dashboard Tab -->
+                <div class="tab-content active" id="dashboard">
+                    <div class="dashboard-grid">
+                        <!-- Estadísticas principales -->
+                        <div class="stats-row">
+                            <div class="stat-card electric">
+                                <div class="stat-icon"><i class="fas fa-shopping-cart"></i></div>
+                                <div class="stat-info">
+                                    <div class="stat-value" id="totalOrders">1,247</div>
+                                    <div class="stat-title">Pedidos Totales</div>
+                                    <div class="stat-change positive">+12% este mes</div>
+                                </div>
+                                <div class="stat-glow"></div>
+                            </div>
+
+                            <div class="stat-card electric">
+                                <div class="stat-icon"><i class="fas fa-dollar-sign"></i></div>
+                                <div class="stat-info">
+                                    <div class="stat-value" id="totalRevenue">$15,847</div>
+                                    <div class="stat-title">Ingresos</div>
+                                    <div class="stat-change positive">+8% este mes</div>
+                                </div>
+                                <div class="stat-glow"></div>
+                            </div>
+
+                            <div class="stat-card electric">
+                                <div class="stat-icon"><i class="fas fa-users"></i></div>
+                                <div class="stat-info">
+                                    <div class="stat-value" id="totalUsers">892</div>
+                                    <div class="stat-title">Usuarios</div>
+                                    <div class="stat-change positive">+15% este mes</div>
+                                </div>
+                                <div class="stat-glow"></div>
+                            </div>
+
+                            <div class="stat-card electric warning">
+                                <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                                <div class="stat-info">
+                                    <div class="stat-value" id="pendingOrders">23</div>
+                                    <div class="stat-title">Pendientes</div>
+                                    <div class="stat-change negative">Requieren atención</div>
+                                </div>
+                                <div class="stat-glow"></div>
+                            </div>
+                        </div>
+
+                        <!-- Gráficos y actividad reciente -->
+                        <div class="dashboard-row">
+                            <div class="chart-container">
+                                <h3>Actividad en Tiempo Real</h3>
+                                <div class="activity-feed" id="activityFeed">
+                                    <!-- Actividad se carga dinámicamente -->
+                                </div>
+                            </div>
+
+                            <div class="quick-actions">
+                                <h3>Acciones Rápidas</h3>
+                                <div class="action-buttons">
+                                    <button class="action-btn" onclick="processAllPending()">
+                                        <i class="fas fa-play"></i>
+                                        Procesar Pendientes
+                                    </button>
+                                    <button class="action-btn" onclick="generateReport()">
+                                        <i class="fas fa-file-alt"></i>
+                                        Generar Reporte
+                                    </button>
+                                    <button class="action-btn" onclick="backupData()">
+                                        <i class="fas fa-download"></i>
+                                        Backup Datos
+                                    </button>
+                                    <button class="action-btn emergency" onclick="emergencyStop()">
+                                        <i class="fas fa-stop"></i>
+                                        Parada de Emergencia
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pedidos Tab -->
+                <div class="tab-content" id="orders">
+                    <div class="section-header">
+                        <h2 class="neon-text">GESTIÓN DE PEDIDOS</h2>
+                        <div class="section-controls">
+                            <select id="orderStatusFilter">
+                                <option value="all">Todos los Estados</option>
+                                <option value="pending">Pendientes</option>
+                                <option value="processing">Procesando</option>
+                                <option value="completed">Completados</option>
+                                <option value="error">Con Error</option>
+                            </select>
+                            <button class="refresh-btn" onclick="refreshOrders()">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="orders-table-container">
+                        <table class="electric-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Usuario</th>
+                                    <th>Servicio</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio</th>
+                                    <th>Estado</th>
+                                    <th>Progreso</th>
+                                    <th>Fecha</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTableBody">
+                                <!-- Pedidos se cargan dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Usuarios Tab -->
+                <div class="tab-content" id="users">
+                    <div class="section-header">
+                        <h2 class="neon-text">GESTIÓN DE USUARIOS</h2>
+                        <div class="section-controls">
+                            <input type="text" placeholder="Buscar usuario..." id="userSearch">
+                            <button class="add-btn" onclick="addUser()">
+                                <i class="fas fa-plus"></i> Nuevo Usuario
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="users-grid" id="usersGrid">
+                        <!-- Usuarios se cargan dinámicamente -->
+                    </div>
+                </div>
+
+                <!-- Reembolsos Tab -->
+                <div class="tab-content" id="refunds">
+                    <div class="section-header">
+                        <h2 class="neon-text">GESTIÓN DE REEMBOLSOS</h2>
+                        <div class="refund-stats">
+                            <span>Pendientes: <strong id="pendingRefunds">3</strong></span>
+                            <span>Este mes: <strong id="monthlyRefunds">$245.00</strong></span>
+                        </div>
+                    </div>
+
+                    <div class="refunds-container" id="refundsContainer">
+                        <!-- Reembolsos se cargan dinámicamente -->
+                    </div>
+                </div>
+
+                <!-- Aceleración Masiva Tab -->
+                <div class="tab-content" id="acceleration">
+                    <div class="section-header">
+                        <h2 class="neon-text">ACELERACIÓN MASIVA</h2>
+                        <p>Acelera pedidos que están tardando más de lo normal</p>
+                    </div>
+
+                    <div class="acceleration-controls">
+                        <div class="acceleration-filters">
+                            <label>Pedidos más antiguos que:</label>
+                            <select id="accelerationTimeFilter">
+                                <option value="24">24 horas</option>
+                                <option value="48">48 horas</option>
+                                <option value="72">72 horas</option>
+                            </select>
+                            <button class="scan-btn" onclick="scanDelayedOrders()">
+                                <i class="fas fa-search"></i> Escanear
+                            </button>
+                        </div>
+
+                        <div class="delayed-orders" id="delayedOrders">
+                            <!-- Pedidos retrasados se muestran aquí -->
+                        </div>
+
+                        <div class="acceleration-actions">
+                            <button class="accelerate-btn" onclick="accelerateSelected()">
+                                <i class="fas fa-rocket"></i> Acelerar Seleccionados
+                            </button>
+                            <button class="accelerate-all-btn" onclick="accelerateAll()">
+                                <i class="fas fa-bolt"></i> Acelerar Todos
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Buscar Órdenes Tab -->
+                <div class="tab-content" id="search">
+                    <div class="section-header">
+                        <h2 class="neon-text">BUSCAR ÓRDENES</h2>
+                        <p>Busca órdenes por ID, usuario o criterios específicos</p>
+                    </div>
+
+                    <div class="search-controls">
+                        <div class="search-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>ID de Orden</label>
+                                    <input type="text" id="searchOrderId" placeholder="JOR12345678">
+                                </div>
+                                <div class="form-group">
+                                    <label>Email de Usuario</label>
+                                    <input type="email" id="searchUserEmail" placeholder="usuario@email.com">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Fecha Desde</label>
+                                    <input type="date" id="searchDateFrom">
+                                </div>
+                                <div class="form-group">
+                                    <label>Fecha Hasta</label>
+                                    <input type="date" id="searchDateTo">
+                                </div>
+                            </div>
+                            <button class="search-btn" onclick="searchOrders()">
+                                <i class="fas fa-search"></i> Buscar
+                            </button>
+                        </div>
+
+                        <div class="search-results" id="searchResults">
+                            <!-- Resultados de búsqueda -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gestión de Fondos Tab -->
+                <div class="tab-content" id="funds">
+                    <div class="section-header">
+                        <h2 class="neon-text">GESTIÓN DE FONDOS</h2>
+                        <p>Administra los fondos de los usuarios</p>
+                    </div>
+
+                    <div class="funds-controls">
+                        <div class="user-search">
+                            <input type="text" id="fundsUserSearch" placeholder="Buscar usuario por email...">
+                            <button onclick="searchUserForFunds()">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+
+                        <div class="selected-user" id="selectedUserFunds" style="display: none;">
+                            <div class="user-info">
+                                <h3 id="selectedUserName">Usuario</h3>
+                                <p>Saldo actual: $<span id="selectedUserBalance">0.00</span></p>
+                            </div>
+                            <div class="funds-actions">
+                                <div class="form-group">
+                                    <label>Cantidad</label>
+                                    <input type="number" id="fundsAmount" step="0.01" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Motivo</label>
+                                    <input type="text" id="fundsReason" placeholder="Motivo del ajuste">
+                                </div>
+                                <div class="funds-buttons">
+                                    <button class="add-funds-btn" onclick="addUserFunds()">
+                                        <i class="fas fa-plus"></i> Añadir Fondos
+                                    </button>
+                                    <button class="remove-funds-btn" onclick="removeUserFunds()">
+                                        <i class="fas fa-minus"></i> Quitar Fondos
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

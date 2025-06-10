@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jorling Seguidores - Potencia tus Redes Sociales</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <!-- Fondo épico con rayos eléctricos -->
+    <div class="electric-background">
+        <div class="lightning-bolt bolt1"></div>
+        <div class="lightning-bolt bolt2"></div>
+        <div class="lightning-bolt bolt3"></div>
+        <div class="lightning-bolt bolt4"></div>
+        <div class="lightning-bolt bolt5"></div>
+        <div class="electric-particles"></div>
+    </div>
+
+    <!-- Barra de navegación -->
+    <nav class="navbar" id="navbar">
+        <div class="logo">
+            <h1><i class="fas fa-bolt"></i> Jorling Seguidores</h1>
+        </div>
+        <div class="nav-links" id="navLinks">
+            <i class="fas fa-times" onclick="hideMenu()"></i>
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#precios">Precios</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+                <li><a href="#" id="loginBtn" class="neon-btn">Iniciar Sesión</a></li>
+                <li><a href="#" id="registerBtn" class="neon-btn">Registrarse</a></li>
+            </ul>
+        </div>
+        <!-- Menú hamburguesa para usuarios logueados -->
+        <div class="user-menu" id="userMenu" style="display: none;">
+            <div class="user-avatar">
+                <i class="fas fa-user-circle"></i>
+                <span id="userName">Usuario</span>
+            </div>
+            <div class="hamburger-menu" id="hamburgerMenu">
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+            </div>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a href="#" id="dashboardBtn"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="#" id="ordersBtn"><i class="fas fa-shopping-cart"></i> Mis Pedidos</a>
+                <a href="#" id="servicesBtn"><i class="fas fa-cogs"></i> Servicios</a>
+                <a href="#" id="fundsBtn"><i class="fas fa-wallet"></i> Añadir Fondos</a>
+                <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+            </div>
+        </div>
+        <i class="fas fa-bars" onclick="showMenu()"></i>
+    </nav>
+
+    <!-- Sección principal -->
+    <section class="header" id="inicio">
+        <div class="electric-grid"></div>
+        <div class="text-box">
+            <h1 class="neon-text">POTENCIA TUS REDES SOCIALES</h1>
+            <p class="glow-text">Domina el mundo digital con nuestros servicios de élite</p>
+            <a href="#servicios" class="hero-btn electric-btn">
+                <span>EXPLORAR SERVICIOS</span>
+                <div class="electric-border"></div>
+            </a>
+        </div>
+        <div class="floating-elements">
+            <div class="floating-icon"><i class="fab fa-instagram"></i></div>
+            <div class="floating-icon"><i class="fab fa-facebook"></i></div>
+            <div class="floating-icon"><i class="fab fa-youtube"></i></div>
+            <div class="floating-icon"><i class="fab fa-twitter"></i></div>
+        </div>
+    </section>
+
+    <!-- Dashboard de usuario (oculto inicialmente) -->
+    <section class="user-dashboard" id="userDashboard" style="display: none;">
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <h2 class="neon-text">PANEL DE CONTROL</h2>
+                <div class="user-balance">
+                    <span>Saldo: $<span id="userBalance">0.00</span></span>
+                    <button class="add-funds-btn" id="addFundsBtn">
+                        <i class="fas fa-plus"></i> Añadir Fondos
+                    </button>
+                </div>
+            </div>
+
+            <!-- Servicios por paquetes -->
+            <div class="services-packages" id="servicesPackages">
+                <h3 class="section-title">SERVICIOS DISPONIBLES</h3>
+                <div class="packages-grid">
+                    <!-- Instagram Packages -->
+                    <div class="package-category">
+                        <h4><i class="fab fa-instagram"></i> Instagram</h4>
+                        <div class="package-list">
+                            <div class="service-package" data-service="instagram-followers">
+                                <h5>Seguidores Instagram</h5>
+                                <div class="package-options">
+                                    <div class="package-option" data-quantity="100" data-price="1.00">
+                                        <span class="quantity">100 Seguidores</span>
+                                        <span class="price">$1.00</span>
+                                    </div>
+                                    <div class="package-option" data-quantity="500" data-price="5.00">
+                                        <span class="quantity">500 Seguidores</span>
+                                        <span class="price">$5.00</span>
+                                    </div>
+                                    <div class="package-option popular" data-quantity="1000" data-price="10.00">
+                                        <span class="quantity">1,000 Seguidores</span>
+                                        <span class="price">$10.00</span>
+                                        <span class="popular-badge">POPULAR</span>
+                                    </div>
+                                    <div class="package-option" data-quantity="5000" data-price="50.00">
+                                        <span class="quantity">5,000 Seguidores</span>
+                                        <span class="price">$50.00</span>
+                                    </div>
+                                    <div class="package-option premium" data-quantity="10000" data-price="105.00">
+                                        <span class="quantity">10,000 Seguidores</span>
+                                        <span class="price">$105.00</span>
+                                        <span class="premium-badge">PREMIUM</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="service-package" data-service="instagram-likes">
+                                <h5>Likes Instagram</h5>
+                                <div class="package-options">
+                                    <div class="package-option" data-quantity="100" data-price="2.00">
+                                        <span class="quantity">100 Likes</span>
+                                        <span class="price">$2.00</span>
+                                    </div>
+                                    <div class="package-option" data-quantity="500" data-price="10.00">
+                                        <span class="quantity">500 Likes</span>
+                                        <span class="price">$10.00</span>
+                                    </div>
+                                    <div class="package-option popular" data-quantity="1000" data-price="20.00">
+                                        <span class="quantity">1,000 Likes</span>
+                                        <span class="price">$20.00</span>
+                                        <span class="popular-badge">POPULAR</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- YouTube Packages -->
+                    <div class="package-category">
+                        <h4><i class="fab fa-youtube"></i> YouTube</h4>
+                        <div class="package-list">
+                            <div class="service-package" data-service="youtube-subscribers">
+                                <h5>Suscriptores YouTube</h5>
+                                <div class="package-options">
+                                    <div class="package-option" data-quantity="100" data-price="1.00">
+                                        <span class="quantity">100 Suscriptores</span>
+                                        <span class="price">$1.00</span>
+                                    </div>
+                                    <div class="package-option popular" data-quantity="1000" data-price="10.00">
+                                        <span class="quantity">1,000 Suscriptores</span>
+                                        <span class="price">$10.00</span>
+                                        <span class="popular-badge">POPULAR</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="service-package" data-service="youtube-watchtime">
+                                <h5>Horas de Reproducción</h5>
+                                <div class="package-options">
+                                    <div class="package-option" data-quantity="500" data-price="15.00">
+                                        <span class="quantity">500 Horas</span>
+                                        <span class="price">$15.00</span>
+                                    </div>
+                                    <div class="package-option premium" data-quantity="1000" data-price="30.00">
+                                        <span class="quantity">1,000 Horas</span>
+                                        <span class="price">$30.00</span>
+                                        <span class="premium-badge">PREMIUM</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Facebook Packages -->
+                    <div class="package-category">
+                        <h4><i class="fab fa-facebook"></i> Facebook</h4>
+                        <div class="package-list">
+                            <div class="service-package" data-service="facebook-likes">
+                                <h5>Likes Facebook</h5>
+                                <div class="package-options">
+                                    <div class="package-option" data-quantity="100" data-price="2.00">
+                                        <span class="quantity">100 Likes</span>
+                                        <span class="price">$2.00</span>
+                                    </div>
+                                    <div class="package-option popular" data-quantity="500" data-price="10.00">
+                                        <span class="quantity">500 Likes</span>
+                                        <span class="price">$10.00</span>
+                                        <span class="popular-badge">POPULAR</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Twitter Packages -->
+                    <div class="package-category">
+                        <h4><i class="fab fa-twitter"></i> Twitter/X</h4>
+                        <div class="package-list">
+                            <div class="service-package" data-service="twitter-followers">
+                                <h5>Seguidores Twitter</h5>
+                                <div class="package-options">
+                                    <div class="package-option" data-quantity="100" data-price="1.00">
+                                        <span class="quantity">100 Seguidores</span>
+                                        <span class="price">$1.00</span>
+                                    </div>
+                                    <div class="package-option popular" data-quantity="1000" data-price="10.00">
+                                        <span class="quantity">1,000 Seguidores</span>
+                                        <span class="price">$10.00</span>
+                                        <span class="popular-badge">POPULAR</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mis pedidos -->
+            <div class="user-orders" id="userOrders">
+                <h3 class="section-title">MIS PEDIDOS</h3>
+                <div class="orders-list" id="ordersList">
+                    <!-- Los pedidos se cargarán dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de pedido -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content electric-modal">
+            <span class="close">&times;</span>
+            <h2 class="neon-text">REALIZAR PEDIDO</h2>
+            <form id="orderForm">
+                <div class="form-group">
+                    <label>Servicio Seleccionado</label>
+                    <input type="text" id="selectedService" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Cantidad</label>
+                    <input type="text" id="selectedQuantity" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Precio Total</label>
+                    <input type="text" id="selectedPrice" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="targetUrl">URL del Perfil/Publicación *</label>
+                    <input type="url" id="targetUrl" placeholder="https://instagram.com/tu_perfil" required>
+                    <small>Pega aquí la URL completa de tu perfil o publicación</small>
+                </div>
+                <button type="submit" class="electric-btn">
+                    <span>CONFIRMAR PEDIDO</span>
+                    <div class="electric-border"></div>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Login -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content electric-modal">
+            <span class="close">&times;</span>
+            <h2 class="neon-text">INICIAR SESIÓN</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Correo Electrónico</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Contraseña</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="electric-btn">
+                    <span>INICIAR SESIÓN</span>
+                    <div class="electric-border"></div>
+                </button>
+                <p class="form-switch">¿No tienes cuenta? <a href="#" id="showRegister">Regístrate aquí</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Registro -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content electric-modal">
+            <span class="close">&times;</span>
+            <h2 class="neon-text">REGISTRARSE</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerName">Nombre Completo</label>
+                    <input type="text" id="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Correo Electrónico</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Contraseña</label>
+                    <input type="password" id="registerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirmPassword">Confirmar Contraseña</label>
+                    <input type="password" id="registerConfirmPassword" required>
+                </div>
+                <button type="submit" class="electric-btn">
+                    <span>REGISTRARSE</span>
+                    <div class="electric-border"></div>
+                </button>
+                <p class="form-switch">¿Ya tienes cuenta? <a href="#" id="showLogin">Inicia sesión aquí</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Botón flotante de WhatsApp -->
+    <a href="https://wa.me/573234135603" class="whatsapp-float electric-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+        <div class="electric-pulse"></div>
+    </a>
+
+    <!-- Footer épico -->
+    <footer class="epic-footer">
+        <div class="footer-lightning"></div>
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h2 class="neon-text">Jorling Seguidores</h2>
+                <p class="glow-text">Dominando el futuro digital</p>
+                <div class="contact-info">
+                    <span><i class="fas fa-phone"></i> +573234135603</span>
+                    <span><i class="fab fa-whatsapp"></i> +573150233701</span>
+                    <span><i class="fab fa-telegram"></i> @Jorlingseguidores</span>
+                </div>
+                <div class="socials">
+                    <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/jorlingjoseseguidores/" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="electric-line"></div>
+            &copy; 2025 Jorling Jose y Rafael Gonzalez | Todos los derechos reservados
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
