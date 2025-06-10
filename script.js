@@ -856,10 +856,230 @@ function animateStats() {
   })
 }
 
+// Sistema de actividad en tiempo real
+function initLiveActivity() {
+  const activityFeed = document.getElementById("activityFeed")
+  if (!activityFeed) return
+
+  // Datos para generar actividades realistas
+  const countries = [
+    { name: "Colombia", flag: "🇨🇴", code: "CO" },
+    { name: "México", flag: "🇲🇽", code: "MX" },
+    { name: "Argentina", flag: "🇦🇷", code: "AR" },
+    { name: "España", flag: "🇪🇸", code: "ES" },
+    { name: "Chile", flag: "🇨🇱", code: "CL" },
+    { name: "Perú", flag: "🇵🇪", code: "PE" },
+    { name: "Venezuela", flag: "🇻🇪", code: "VE" },
+    { name: "Ecuador", flag: "🇪🇨", code: "EC" },
+    { name: "Uruguay", flag: "🇺🇾", code: "UY" },
+    { name: "Bolivia", flag: "🇧🇴", code: "BO" },
+    { name: "Estados Unidos", flag: "🇺🇸", code: "US" },
+    { name: "Brasil", flag: "🇧🇷", code: "BR" },
+  ]
+
+  const names = [
+    "Carlos",
+    "María",
+    "José",
+    "Ana",
+    "Luis",
+    "Carmen",
+    "Miguel",
+    "Isabel",
+    "Antonio",
+    "Laura",
+    "Francisco",
+    "Pilar",
+    "Manuel",
+    "Dolores",
+    "David",
+    "Teresa",
+    "Jesús",
+    "Rosa",
+    "Javier",
+    "Antonia",
+    "Daniel",
+    "Francisca",
+    "Rafael",
+    "Cristina",
+    "Fernando",
+    "Lucía",
+    "Sergio",
+    "Mercedes",
+    "Pablo",
+    "Elena",
+    "Alejandro",
+    "Manuela",
+    "Eduardo",
+    "Josefa",
+    "Gonzalo",
+    "Concepción",
+    "Adrián",
+    "Rosario",
+    "Rubén",
+    "Amparo",
+    "Diego",
+    "Esperanza",
+    "Álvaro",
+    "Soledad",
+    "Felipe",
+    "Gloria",
+    "Ignacio",
+    "Victoria",
+    "Marcos",
+    "Remedios",
+  ]
+
+  const services = [
+    "1,000 Seguidores Instagram",
+    "500 Likes Instagram",
+    "2,000 Seguidores YouTube",
+    "1,500 Likes Facebook",
+    "800 Seguidores Twitter",
+    "300 Comentarios Instagram",
+    "5,000 Visualizaciones YouTube",
+    "1,200 Seguidores TikTok",
+  ]
+
+  const actions = [
+    { type: "register", text: "se registró en la plataforma", icon: "fas fa-user-plus" },
+    { type: "order", text: "compró", icon: "fas fa-shopping-cart" },
+    { type: "view", text: "está viendo servicios", icon: "fas fa-eye" },
+    { type: "order", text: "completó pedido de", icon: "fas fa-check-circle" },
+  ]
+
+  // Generar actividades iniciales
+  for (let i = 0; i < 8; i++) {
+    generateActivity(false)
+  }
+
+  // Generar nuevas actividades cada 3-8 segundos
+  setInterval(
+    () => {
+      generateActivity(true)
+
+      // Mantener máximo 15 actividades
+      const activities = activityFeed.querySelectorAll(".activity-item")
+      if (activities.length > 15) {
+        activities[activities.length - 1].remove()
+      }
+    },
+    Math.random() * 5000 + 3000,
+  )
+
+  function generateActivity(isNew = false) {
+    const country = countries[Math.floor(Math.random() * countries.length)]
+    const name = names[Math.floor(Math.random() * names.length)]
+    const action = actions[Math.floor(Math.random() * actions.length)]
+
+    let actionText = action.text
+    if (action.type === "order") {
+      const service = services[Math.floor(Math.random() * services.length)]
+      actionText += ` ${service}`
+    }
+
+    const timeAgo = Math.floor(Math.random() * 60) + 1
+    const timeText = timeAgo === 1 ? "hace 1 minuto" : `hace ${timeAgo} minutos`
+
+    const activityHTML = `
+      <div class="activity-item ${isNew ? "new" : ""}">
+        <div class="activity-icon ${action.type}">
+          <i class="${action.icon}"></i>
+        </div>
+        <div class="activity-details">
+          <div class="activity-user">${name}</div>
+          <div class="activity-action">${actionText}</div>
+        </div>
+        <div class="activity-location">
+          <span class="country-flag">${country.flag}</span>
+          <span>${country.name}</span>
+        </div>
+        <div class="activity-time">${timeText}</div>
+      </div>
+    `
+
+    if (isNew) {
+      activityFeed.insertAdjacentHTML("afterbegin", activityHTML)
+
+      // Remover clase 'new' después de la animación
+      setTimeout(() => {
+        const newItem = activityFeed.querySelector(".activity-item.new")
+        if (newItem) {
+          newItem.classList.remove("new")
+        }
+      }, 800)
+    } else {
+      activityFeed.insertAdjacentHTML("beforeend", activityHTML)
+    }
+  }
+}
+
+// Animar estadísticas globales
+function animateGlobalStats() {
+  const globalStats = [
+    { id: "globalViews", target: 1247892, increment: 234 },
+    { id: "activeNow", target: 8439, increment: 47 },
+    { id: "ordersToday", target: 2156, increment: 12 },
+  ]
+
+  globalStats.forEach((stat) => {
+    const element = document.getElementById(stat.id)
+    if (element) {
+      let current = stat.target - Math.floor(Math.random() * 1000)
+
+      // Animación inicial
+      const timer = setInterval(() => {
+        current += Math.floor(Math.random() * 50) + 10
+        if (current >= stat.target) {
+          current = stat.target
+          clearInterval(timer)
+        }
+        element.textContent = current.toLocaleString()
+      }, 50)
+
+      // Actualizar periódicamente con incrementos realistas
+      setInterval(
+        () => {
+          const increment = Math.floor(Math.random() * stat.increment) + 1
+          current += increment
+          element.textContent = current.toLocaleString()
+        },
+        Math.random() * 10000 + 5000,
+      ) // Entre 5-15 segundos
+    }
+  })
+}
+
+// Efecto de usuarios conectándose en tiempo real
+function simulateRealTimeConnections() {
+  const activeNowElement = document.getElementById("activeNow")
+  if (!activeNowElement) return
+
+  setInterval(() => {
+    const currentValue = Number.parseInt(activeNowElement.textContent.replace(/,/g, ""))
+    const change = Math.floor(Math.random() * 20) - 10 // Entre -10 y +10
+    const newValue = Math.max(5000, currentValue + change) // Mínimo 5000
+
+    activeNowElement.textContent = newValue.toLocaleString()
+
+    // Efecto visual de cambio
+    activeNowElement.style.transform = "scale(1.1)"
+    activeNowElement.style.color = change > 0 ? "#39ff14" : "#ff1493"
+
+    setTimeout(() => {
+      activeNowElement.style.transform = "scale(1)"
+      activeNowElement.style.color = "var(--primary-color)"
+    }, 300)
+  }, 2000) // Cada 2 segundos
+}
+
 // Inicializar efectos al cargar
 setTimeout(() => {
   initParticleEffects()
   animateStats()
+  initLiveActivity()
+  animateGlobalStats()
+  simulateRealTimeConnections()
 }, 1000)
 
 console.log("🚀 Jorling Seguidores iniciado correctamente")
